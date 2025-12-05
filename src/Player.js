@@ -1,4 +1,5 @@
 import GameObject from './GameObject.js'
+import Circle from './Circle.js'
 
 export default class Player extends GameObject {
     constructor(game, x, y, width, height, color) {
@@ -55,25 +56,43 @@ export default class Player extends GameObject {
         ctx.fillRect(this.x + this.width * 0.6, this.y + this.height * 0.2, this.width * 0.2, this.height * 0.2)
         
         // Rita pupiller
-        ctx.fillStyle = 'black'
-        ctx.fillRect(
-            this.x + this.width * 0.25 + this.directionX * this.width * 0.05, 
-            this.y + this.height * 0.25 + this.directionY * this.width * 0.05, 
-            this.width * 0.1, 
-            this.height * 0.1
-        )
-        ctx.fillRect(
-            this.x + this.width * 0.65 + this.directionX * this.width * 0.05, 
-            this.y + this.height * 0.25 + this.directionY * this.width * 0.05, 
-            this.width * 0.1, 
-            this.height * 0.1
-        )
+        ctx.fillStyle = "black"
+        ctx.beginPath()
+        ctx.arc(this.x + this.width * 0.3 + this.directionX * this.width * 0.05, this.y + this.height * 0.3 + this.directionY * this.width * 0.05, this.width * 0.08, 0, Math.PI * 2)
+        ctx.fill()
+
+        ctx.beginPath()
+        ctx.arc(this.x + this.width * 0.7 + this.directionX * this.width * 0.05, this.y + this.height * 0.3 + this.directionY * this.width * 0.05, this.width * 0.08, 0, Math.PI * 2)
+        ctx.fill()
+
+        // ctx.fillRect(
+        //     this.x + this.width * 0.25 + this.directionX * this.width * 0.05, 
+        //     this.y + this.height * 0.25 + this.directionY * this.width * 0.05, 
+        //     this.width * 0.1, 
+        //     this.height * 0.1
+        // )
+        // ctx.fillRect(
+        //     this.x + this.width * 0.65 + this.directionX * this.width * 0.05, 
+        //     this.y + this.height * 0.25 + this.directionY * this.width * 0.05, 
+        //     this.width * 0.1, 
+        //     this.height * 0.1
+        // )
+
         // rita mun som ett streck
         ctx.strokeStyle = 'black'
         ctx.lineWidth = 2
         ctx.beginPath()
-        ctx.moveTo(this.x + this.width * 0.3, this.y + this.height * 0.65)
-        ctx.lineTo(this.x + this.width * 0.7, this.y + this.height * 0.65)
+        // ctx.moveTo(this.x + this.width * 0.3, this.y + this.height * 0.65)
+        // ctx.lineTo(this.x + this.width * 0.7, this.y + this.height * 0.65)
+
+        if (this.velocityX != 0 || this.velocityY != 0) {
+            ctx.arc(this.x + this.width * 0.5, this.y + this.height * 0.58, this.width * 0.15, 0, Math.PI) // happy
+        }
+
+        else {
+            ctx.arc(this.x + this.width * 0.5, this.y + this.height * 0.7, this.width * 0.15, Math.PI, 0) // sad
+        }
+        
         ctx.stroke()
     }
 }
