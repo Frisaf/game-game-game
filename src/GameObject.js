@@ -21,3 +21,5 @@ export default class GameObject {
                this.y + this.height > other.y
     }
 }
+
+// I have to implement feature that if this.color == other.color it can pass through

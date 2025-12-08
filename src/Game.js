@@ -1,6 +1,8 @@
 import Player from './Player.js'
 import InputHandler from './InputHandler.js'
 import Rectangle from './Rectangle.js'
+import Circle from './Circle.js'
+import Wall from './Wall.js'
 
 export default class Game {
     constructor(width, height) {
@@ -9,11 +11,13 @@ export default class Game {
 
         this.inputHandler = new InputHandler(this)
 
-        this.player = new Player(this, 50, 50, 50, 50, 'green')
+        this.player = new Player(this, 50, 50, 50, 50, '#5b7992')
 
         // Skapa alla objekt i spelet
         this.gameObjects = [
-            new Rectangle(this, 200, 150, 50, 50, 'red')
+            new Rectangle(this, 200, 150, 50, 50, '#8eb1f2'),
+            new Rectangle(this, 300, 30, 100, 100, "#17abe6"),
+            new Rectangle(this, 100, 200, 50, 100, "#5b7992"),
         ]
 
         // Sätt starthastighet (pixlar per millisekund)
@@ -29,12 +33,12 @@ export default class Game {
         this.player.update(deltaTime)
 
         // Exempel på input-hantering
-        if (this.inputHandler.keys.has('r')) {
-            this.gameObjects[0].vx += 0.001 * deltaTime
-        }
-        if (this.inputHandler.keys.has('b')) {
-            this.gameObjects[1].vy -= 0.001 * deltaTime
-        }
+        // if (this.inputHandler.keys.has('r')) {
+        //     this.gameObjects[0].vx += 0.001 * deltaTime
+        // }
+        // if (this.inputHandler.keys.has('b')) {
+        //     this.gameObjects[1].vy -= 0.001 * deltaTime
+        // }
 
         this.gameObjects.forEach(obj => {
             if (obj !== this.player && this.player.intersects(obj)) {
@@ -49,6 +53,12 @@ export default class Game {
                 } else if (this.player.directionY < 0) { // rör sig uppåt
                     this.player.y = obj.y + obj.height
                 }
+
+                const player_color = this.player.color
+                const object_color = obj.color
+
+                this.player.color = object_color
+                obj.color = player_color
             }
         })
     }
