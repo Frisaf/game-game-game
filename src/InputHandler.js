@@ -6,7 +6,7 @@ export default class InputHandler {
             console.log(event.key)
             this.keys.add(event.key)
         })
-        window.addEventListener('keyup', (event) => {
+        this.keyup = window.addEventListener('keyup', (event) => {
             this.keys.delete(event.key)
         })
     }

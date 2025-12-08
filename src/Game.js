@@ -29,12 +29,12 @@ export default class Game {
         this.player.update(deltaTime)
 
         // Exempel på input-hantering
-        if (this.inputHandler.keys.has('r')) {
-            this.gameObjects[0].vx += 0.001 * deltaTime
-        }
-        if (this.inputHandler.keys.has('b')) {
-            this.gameObjects[1].vy -= 0.001 * deltaTime
-        }
+        // if (this.inputHandler.keys.has('r')) {
+        //     this.gameObjects[0].vx += 0.001 * deltaTime
+        // }
+        // if (this.inputHandler.keys.has('b')) {
+        //     this.gameObjects[1].vy -= 0.001 * deltaTime
+        // }
     }
 
     draw(ctx) {
