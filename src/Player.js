@@ -17,14 +17,18 @@ export default class Player extends GameObject {
         // Fysik egenskaper
         this.jumpPower = -0.6 // negativ hastighet för att hoppa uppåt
         this.isGrounded = false // om spelaren står på marken
+
+        this.jumpCount = 0
+        this.maxJump = 2
+        this.spacePressed = false
     }
 
     update(deltaTime) {
         // Horisontell rörelse
-        if (this.game.inputHandler.keys.has('ArrowLeft')) {
+        if (this.game.inputHandler.keys.has('a')) {
             this.velocityX = -this.moveSpeed
             this.directionX = -1
-        } else if (this.game.inputHandler.keys.has('ArrowRight')) {
+        } else if (this.game.inputHandler.keys.has('d')) {
             this.velocityX = this.moveSpeed
             this.directionX = 1
         } else {
@@ -33,9 +37,19 @@ export default class Player extends GameObject {
         }
 
         // Hopp - endast om spelaren är på marken
-        if (this.game.inputHandler.keys.has(' ') && this.isGrounded) {
-            this.velocityY = this.jumpPower
+        if (this.game.inputHandler.keys.has(' ') && this.jumpCount < this.maxJump && this.spacePressed === false) {
             this.isGrounded = false
+            this.velocityY = this.jumpPower
+            this.jumpCount += 1
+            this.spacePressed = true
+
+            console.log(this.game.inputHandler.keys)
+        }
+
+        this.spacePressed = false
+
+        if (this.isGrounded == true) {
+            this.jumpCount = 0
         }
 
         // Applicera gravitation
