@@ -17,10 +17,15 @@ export default class Player extends GameObject {
         // Fysik egenskaper
         this.jumpPower = -0.6 // negativ hastighet för att hoppa uppåt
         this.isGrounded = false // om spelaren står på marken
+        this.isTouchingWall = false
 
         this.jumpCount = 0
         this.maxJump = 2
-        this.spacePressed = false
+
+        this.hasDashed = false
+        this.dashSpeed = 4
+        this.dashDuration = 200
+        this.dashCooldown = 501
     }
 
     update(deltaTime) {
@@ -28,28 +33,57 @@ export default class Player extends GameObject {
         if (this.game.inputHandler.keys.has('a')) {
             this.velocityX = -this.moveSpeed
             this.directionX = -1
+
         } else if (this.game.inputHandler.keys.has('d')) {
             this.velocityX = this.moveSpeed
             this.directionX = 1
+
         } else {
             this.velocityX = 0
             this.directionX = 0
         }
 
-        // Hopp - endast om spelaren är på marken
-        if (this.game.inputHandler.keys.has(' ') && this.jumpCount < this.maxJump && this.spacePressed === false) {
+        // Hopp
+        if (this.game.inputHandler.keys.has(' ') && this.jumpCount < this.maxJump && (this.isGrounded || !this.isGrounded || this.isTouchingWall)) {
             this.isGrounded = false
             this.velocityY = this.jumpPower
             this.jumpCount += 1
-            this.spacePressed = true
 
-            console.log(this.game.inputHandler.keys)
+            if (this.isTouchingWall) {
+                this.jumpCount = 0
+            }
+
+            this.game.inputHandler.keys.delete(" ")
         }
 
         this.spacePressed = false
 
         if (this.isGrounded == true) {
             this.jumpCount = 0
+        }
+
+        if (this.game.inputHandler.keys.has("Shift") && this.hasDashed === false && this.dashCooldown === 501) {
+            this.velocityX = this.directionX * this.dashSpeed
+            this.hasDashed = true
+            this.dashTimer = this.dashDuration
+            this.dashCooldown -= 1
+        }
+
+        if (this.hasDashed == true) {
+            this.dashTimer -= deltaTime
+
+            if (this.dashTimer <= 0) {
+                this.hasDashed = false
+                this.velocityX = 0
+            }
+        }
+
+        if (this.dashCooldown <= 500) {
+            this.dashCooldown -= deltaTime
+
+            if (this.dashCooldown <= 0) {
+                this.dashCooldown = 501
+            }
         }
 
         // Applicera gravitation

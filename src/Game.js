@@ -2,6 +2,7 @@ import Player from './Player.js'
 import InputHandler from './InputHandler.js'
 import Rectangle from './Rectangle.js'
 import Platform from './Platform.js'
+import MovingPlatform from './MovingPlatform.js'
 
 export default class Game {
     constructor(width, height) {
@@ -27,6 +28,13 @@ export default class Game {
             new Platform(this, 100, this.height - 280, 100, 20, '#8B4513'),
             new Platform(this, 550, this.height - 160, 100, 20, '#8B4513'),
             new Platform(this, 350, this.height - 320, 140, 20, '#8B4513'),
+            
+            // Walls
+            new Platform(this, 500, this.height - 400, 20, 200, "aliceblue"),
+
+            // Moving Platforms
+
+            new MovingPlatform(this, 200, this.height - 100, 150, 20, 300, "x", "green")
         ]
 
         // Skapa andra objekt i spelet (valfritt)
@@ -63,9 +71,15 @@ export default class Game {
                 } else if (collision.direction === 'left' && this.player.velocityX > 0) {
                     // Kollision från vänster
                     this.player.x = platform.x - this.player.width
+                    this.player.isTouchingWall = true
                 } else if (collision.direction === 'right' && this.player.velocityX < 0) {
                     // Kollision från höger
                     this.player.x = platform.x + platform.width
+                    this.player.isTouchingWall = true
+                }
+
+                if (this.player.isTouchingWall) {
+                    this.player.velocityY = 0
                 }
             }
         })
