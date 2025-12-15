@@ -1,12 +1,12 @@
 import GameObject from './GameObject.js'
 
 export default class Coin extends GameObject {
-    constructor(game, x, y, size = 20, value = 10) {
+    constructor(game, x, y, size = 20, value = 10, color = "yellow") {
         super(game, x, y, size, size)
         this.size = size
-        this.color = 'yellow'
+        this.color = color
         this.value = value // Poäng för detta mynt
-        
+
         // Bob animation
         this.bobOffset = 0
         this.bobSpeed = 0.006 // hur snabbt myntet gungar

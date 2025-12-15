@@ -1,3 +1,5 @@
+import Rectangle from "./Rectangle.js"
+
 export default class UserInterface {
     constructor(game) {
         this.game = game
@@ -23,8 +25,14 @@ export default class UserInterface {
         ctx.fillText(scoreText, 20, 40)
         
         // Rita coins collected
-        const coinsText = `Coins: ${this.game.coinsCollected}`
+        const coinsText = `Coins: ${this.game.coinsCollected} / ${this.game.coinsTotal}`
         ctx.fillText(coinsText, 20, 70)
+
+        const victoryText = "All coins collected! Good job!"
+
+        if (this.game.coinsCollected === this.game.coinsTotal) {
+            ctx.fillText(victoryText, 250, 250)
+        }
         
         ctx.restore()
     }

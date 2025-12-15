@@ -37,15 +37,17 @@ export default class Game {
 
         // Skapa mynt i nivån
         this.coins = [
-            new Coin(this, 200, this.height - 180),
-            new Coin(this, 240, this.height - 180),
-            new Coin(this, 450, this.height - 240),
+            new Coin(this, 200, this.height - 180, 15, 10, "lightgray"),
+            new Coin(this, 240, this.height - 180, 15, 10, "lightgray"),
+            new Coin(this, 450, this.height - 240, 20, 20),
             new Coin(this, 150, this.height - 320),
-            new Coin(this, 190, this.height - 320),
+            new Coin(this, 190, this.height - 320, 15, 10, "lightgray"),
             new Coin(this, 600, this.height - 200),
             new Coin(this, 380, this.height - 360),
-            new Coin(this, 420, this.height - 360),
+            new Coin(this, 420, this.height - 360, 15, 10, "lightgray"),
         ]
+
+        this.coinsTotal = this.coins.length
 
         // Skapa andra objekt i spelet (valfritt)
         this.gameObjects = []
