@@ -34,7 +34,7 @@ export default class Game {
 
             // Moving Platforms
 
-            new MovingPlatform(this, 200, this.height - 100, 150, 20, 300, "x", "green")
+            new MovingPlatform(this, 200, this.height - 400, 150, 20, 300, "y", 2, "green")
         ]
 
         // Skapa andra objekt i spelet (valfritt)
@@ -53,6 +53,7 @@ export default class Game {
 
         // Antag att spelaren inte står på marken, tills vi hittar en kollision
         this.player.isGrounded = false
+        this.player.onMovingPlatform = null
 
         // Kontrollera kollisioner med plattformar
         this.platforms.forEach(platform => {
@@ -61,6 +62,16 @@ export default class Game {
             if (collision) {
                 if (collision.direction === 'top' && this.player.velocityY > 0) {
                     // Kollision från ovan - spelaren landar på plattformen
+                    if (platform instanceof MovingPlatform) {
+                        if (platform.axis === "x") {
+                            this.player.x += platform.velocity * (platform.direction === "right" ? 1 : -1)
+                        }
+
+                        else {
+                            this.player.y += platform.velocity * (platform.direction === "up" ? 1 : -1)
+                        }
+                    }
+
                     this.player.y = platform.y - this.player.height
                     this.player.velocityY = 0
                     this.player.isGrounded = true
