@@ -1,7 +1,7 @@
 import GameObject from './GameObject.js'
 
 export default class Enemy extends GameObject {
-    constructor(game, x, y, width, height, patrolDistance = null) {
+    constructor(game, x, y, width, height, patrolDistance = null, speed, damage, type = null) {
         super(game, x, y, width, height)
         this.color = 'red' // Röd
         
@@ -14,10 +14,10 @@ export default class Enemy extends GameObject {
         this.startX = x
         this.patrolDistance = patrolDistance
         this.endX = patrolDistance !== null ? x + patrolDistance : null
-        this.speed = 0.1
+        this.speed = speed || 0.1
         this.direction = 1 // 1 = höger, -1 = vänster
         
-        this.damage = 1 // Hur mycket skada fienden gör
+        this.damage = damage || 1 // Hur mycket skada fienden gör
     }
 
     update(deltaTime) {
@@ -48,9 +48,16 @@ export default class Enemy extends GameObject {
         } else {
             this.velocityX = 0
         }
+
+        if (this.game.player < this.x) {
+            this.x -= this.velocityX * deltaTime
+        }
+
+        else {
+            this.x += this.velocityX * deltaTime
+        }
         
         // Uppdatera position
-        this.x += this.velocityX * deltaTime
         this.y += this.velocityY * deltaTime
     }
 

@@ -4,6 +4,8 @@ import Platform from './Platform.js'
 import Coin from './Coin.js'
 import Enemy from './Enemy.js'
 import UserInterface from './UserInterface.js'
+import HealthBoost from './HealthBoost.js'
+import FollowingEnemy from './FollowingEnemy.js'
 
 export default class Game {
     constructor(width, height) {
@@ -51,8 +53,12 @@ export default class Game {
         // Skapa fiender i nivån
         this.enemies = [
             new Enemy(this, 200, this.height - 220, 40, 40, 80),  // patrol 80px
-            new Enemy(this, 450, this.height - 240, 40, 40),      // ingen patrol, går tills kollision
+            new Enemy(this, 450, this.height - 240, 50, 50, null, 0.5, 2, "follow"), // ingen patrol, går tills kollision
             new Enemy(this, 360, this.height - 440, 40, 40, 50),  // patrol 50px
+        ]
+
+        this.healthBoosts = [
+            new HealthBoost(this, 150, this.height - 400)
         ]
 
         // Skapa andra objekt i spelet (valfritt)
@@ -68,6 +74,8 @@ export default class Game {
         
         // Uppdatera mynt
         this.coins.forEach(coin => coin.update(deltaTime))
+
+        this.healthBoosts.forEach(healthBoost => healthBoost.update(deltaTime))
         
         // Uppdatera fiender
         this.enemies.forEach(enemy => enemy.update(deltaTime))
@@ -112,6 +120,13 @@ export default class Game {
                 coin.markedForDeletion = true
             }
         })
+
+        this.healthBoosts.forEach(healthBoost => {
+            if (this.player.intersects(healthBoost) && !healthBoost.markedForDeletion && this.player.health < this.player.maxHealth) {
+                this.player.health += healthBoost.healing
+                healthBoost.markedForDeletion = true
+            }
+        })
         
         // Kontrollera kollision med fiender
         this.enemies.forEach(enemy => {
@@ -124,6 +139,7 @@ export default class Game {
         // Ta bort alla objekt markerade för borttagning
         this.coins = this.coins.filter(coin => !coin.markedForDeletion)
         this.enemies = this.enemies.filter(enemy => !enemy.markedForDeletion)
+        this.healthBoosts = this.healthBoosts.filter(healthBoost => !healthBoost.markedForDeletion)
 
         // Förhindra att spelaren går utöver skärmen horisontellt
         if (this.player.x < 0) {
@@ -140,6 +156,8 @@ export default class Game {
         
         // Rita mynt
         this.coins.forEach(coin => coin.draw(ctx))
+
+        this.healthBoosts.forEach(healthBoost => healthBoost.draw(ctx))
         
         // Rita fiender
         this.enemies.forEach(enemy => enemy.draw(ctx))

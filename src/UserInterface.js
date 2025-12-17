@@ -31,21 +31,27 @@ export default class UserInterface {
         ctx.fillText(healthText, 20, 100)
         
         // Rita health bars som hjärtan
-        for (let i = 0; i < this.game.player.maxHealth; i++) {
-            const heartX = 20 + i * 30
-            const heartY = 110
+        // for (let i = 0; i < this.game.player.maxHealth; i++) {
+        //     const heartX = 20 + i * 30
+        //     const heartY = 110
             
-            if (i < this.game.player.health) {
-                // Fyllt hjärta
-                ctx.fillStyle = '#FF0000'
-            } else {
-                // Tomt hjärta
-                ctx.fillStyle = '#333333'
-            }
+        //     if (i < this.game.player.health) {
+        //         // Fyllt hjärta
+        //         ctx.fillStyle = '#FF0000'
+        //     } else {
+        //         // Tomt hjärta
+        //         ctx.fillStyle = '#333333'
+        //     }
             
-            // Rita enkelt hjärta (rektangel för enkelhetens skull)
-            ctx.fillRect(heartX, heartY, 20, 20)
-        }
+        //     // Rita enkelt hjärta (rektangel för enkelhetens skull)
+        //     ctx.fillRect(heartX, heartY, 20, 20)
+        // }
+
+        const healthMeterMaxWidth = 120
+        ctx.fillStyle = "red"
+
+        ctx.fillRect(20, 110, (this.game.player.health / this.game.player.maxHealth) * healthMeterMaxWidth, 20)
+        ctx.strokeRect(20, 110, healthMeterMaxWidth, 20)
         
         ctx.restore()
     }
