@@ -5,7 +5,6 @@ import Coin from './Coin.js'
 import Enemy from './Enemy.js'
 import UserInterface from './UserInterface.js'
 import HealthBoost from './HealthBoost.js'
-import FollowingEnemy from './FollowingEnemy.js'
 
 export default class Game {
     constructor(width, height) {
@@ -52,9 +51,10 @@ export default class Game {
 
         // Skapa fiender i nivån
         this.enemies = [
-            new Enemy(this, 200, this.height - 220, 40, 40, 80),  // patrol 80px
-            new Enemy(this, 450, this.height - 240, 50, 50, null, 0.5, 2, "follow"), // ingen patrol, går tills kollision
+            new Enemy(this, 220, this.height - 220, 40, 40, 80),  // patrol 80px
+            new Enemy(this, 450, this.height - 240, 50, 50, null, 0.5, 2), // ingen patrol, går tills kollision
             new Enemy(this, 360, this.height - 440, 40, 40, 50),  // patrol 50px
+            new Enemy(this, 300, this.height - 300, 40, 40, null, 0.04, 1, "follow")
         ]
 
         this.healthBoosts = [
@@ -131,8 +131,16 @@ export default class Game {
         // Kontrollera kollision med fiender
         this.enemies.forEach(enemy => {
             if (this.player.intersects(enemy) && !enemy.markedForDeletion) {
-                // Spelaren tar skada
-                this.player.takeDamage(enemy.damage)
+                console.log(enemy.getCollisionData(this.player).direction)
+                if (enemy.getCollisionData(this.player).direction === "bottom") {
+                    enemy.takeDamage(1)
+                    console.log("enemy took damage")
+                }
+
+                else {
+                    // Spelaren tar skada
+                    this.player.takeDamage(enemy.damage)
+                }
             }
         })
         

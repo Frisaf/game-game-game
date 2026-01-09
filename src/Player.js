@@ -76,7 +76,7 @@ export default class Player extends GameObject {
         }
     }
     
-    takeDamage(amount) {
+    takeDamage(amount, knockbackX = 0) {
         if (this.invulnerable) return
         
         this.health -= amount
@@ -85,6 +85,9 @@ export default class Player extends GameObject {
         // Sätt invulnerability efter att ha tagit skada
         this.invulnerable = true
         this.invulnerableTimer = this.invulnerableDuration
+
+        this.velocityX = knockbackX
+        this.velocityY = -0.3
     }
     
     handlePlatformCollision(platform) {

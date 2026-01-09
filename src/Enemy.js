@@ -1,4 +1,5 @@
 import GameObject from './GameObject.js'
+import HealthBoost from './HealthBoost.js'
 
 export default class Enemy extends GameObject {
     constructor(game, x, y, width, height, patrolDistance = null, speed, damage, type = null) {
@@ -18,6 +19,9 @@ export default class Enemy extends GameObject {
         this.direction = 1 // 1 = höger, -1 = vänster
         
         this.damage = damage || 1 // Hur mycket skada fienden gör
+
+        this.type = type
+        this.health = 3
     }
 
     update(deltaTime) {
@@ -56,9 +60,29 @@ export default class Enemy extends GameObject {
         else {
             this.x += this.velocityX * deltaTime
         }
-        
-        // Uppdatera position
-        this.y += this.velocityY * deltaTime
+
+        if (this.type == "follow") {
+            if (this.game.player.x < this.x) {
+                this.x -= this.speed * deltaTime
+            }
+
+            else {
+                this.x += this.speed * deltaTime
+            }
+
+            if (this.game.player.y < this.y) {
+                this.y -= this.speed * deltaTime
+            }
+
+            else {
+                this.y += this.speed * deltaTime
+            }
+        }
+
+        else {
+            // Uppdatera position
+            this.y += this.velocityY * deltaTime
+        }
     }
 
     handlePlatformCollision(platform) {
@@ -102,6 +126,16 @@ export default class Enemy extends GameObject {
                 this.x = gameWidth - this.width
                 this.direction = -1
             }
+        }
+    }
+
+    takeDamage(amount) {
+        this.health -= amount
+
+        if (this.health <= 0) {
+            this.markedForDeletion = true
+            
+            this.game.healthBoosts.push(new HealthBoost(this.game, this.x, this.y))
         }
     }
 
