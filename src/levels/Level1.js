@@ -9,6 +9,7 @@ import bigClouds from '../assets/clouds/Big Clouds.png'
 import cloud1 from '../assets/clouds/Small Cloud 1.png'
 import cloud2 from '../assets/clouds/Small Cloud 2.png'
 import cloud3 from '../assets/clouds/Small Cloud 3.png'
+import ground from "../assets/Pixel Adventure 1/Terrain/Terrain (16x16).png"
 
 /**
  * Level 1 - Den första nivån i spelet
@@ -82,7 +83,7 @@ export default class Level1 extends Level {
 
         this.platforms = [
             // Marken (hela nivån)
-            new Platform(this.game, 0, height - 40, worldWidth, 40, '#654321'),
+            new Platform(this.game, 0, height - 40, worldWidth, 40, '#654321', ground, 96, 0, 48, 48),
             
             // Plattformar (utspridda över nivån)
             new Platform(this.game, 150, height - 140, 150, 20, '#8B4513'),

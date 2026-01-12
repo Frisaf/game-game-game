@@ -1,9 +1,17 @@
 import GameObject from './GameObject.js'
 
 export default class Platform extends GameObject {
-    constructor(game, x, y, width, height, color = '#8B4513') {
+    constructor(game, x, y, width, height, color = '#8B4513', sprite = null, spriteX = null, spriteY = null, spriteWidth = null, spriteHeight = null) {
         super(game, x, y, width, height)
         this.color = color
+        this.sprite = sprite
+        this.spriteX = spriteX
+        this.spriteY = spriteY
+        this.spriteWidth = spriteWidth
+        this.spriteHeight = spriteHeight
+
+        this.img = new Image()
+        this.img.src = sprite
     }
 
     update(deltaTime) {
@@ -15,13 +23,19 @@ export default class Platform extends GameObject {
         const screenX = camera ? this.x - camera.x : this.x
         const screenY = camera ? this.y - camera.y : this.y
         
-        // Rita plattformen
-        ctx.fillStyle = this.color
-        ctx.fillRect(screenX, screenY, this.width, this.height)
-        
-        // Rita en enkel kant/skugga för att ge djup
-        ctx.strokeStyle = '#654321'
-        ctx.lineWidth = 2
-        ctx.strokeRect(screenX, screenY, this.width, this.height)
+        if (this.sprite) {
+            ctx.drawImage(this.img, this.spriteX, this.spriteY, this.spriteWidth, this.spriteHeight, screenX, screenY, this.width, this.height)
+        }
+
+        else {
+            // Rita plattformen
+            ctx.fillStyle = this.color
+            ctx.fillRect(screenX, screenY, this.width, this.height)
+            
+            // Rita en enkel kant/skugga för att ge djup
+            ctx.strokeStyle = '#654321'
+            ctx.lineWidth = 2
+            ctx.strokeRect(screenX, screenY, this.width, this.height)
+        }
     }
 }
