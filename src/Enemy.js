@@ -1,4 +1,6 @@
 import GameObject from './GameObject.js'
+import runSprite from "./assets/Pixel Adventure 1/Main Characters/Mask Dude/Run (32x32).png"
+import fallSprite from "./assets/Pixel Adventure 1/Main Characters/Mask Dude/Fall (32x32).png"
 
 export default class Enemy extends GameObject {
     constructor(game, x, y, width, height, patrolDistance = null) {
@@ -19,6 +21,8 @@ export default class Enemy extends GameObject {
         
         this.damage = 1 // Hur mycket skada fienden gör
 
+        this.loadSprite("run", runSprite, 12, 80)
+        this.loadSprite("fall", fallSprite, 1)
     }
 
     update(deltaTime) {
@@ -53,6 +57,16 @@ export default class Enemy extends GameObject {
         // Uppdatera position
         this.x += this.velocityX * deltaTime
         this.y += this.velocityY * deltaTime
+
+        if (this.velocityX !== 0) {
+            this.setAnimation("run")
+        }
+
+        else if (!this.isGrounded && this.velocityY > 0) {
+            this.setAnimation("fall")
+        }
+
+        this.updateAnimation(deltaTime)
     }
 
     handlePlatformCollision(platform) {
@@ -103,9 +117,13 @@ export default class Enemy extends GameObject {
         // Beräkna screen position (om camera finns)
         const screenX = camera ? this.x - camera.x : this.x
         const screenY = camera ? this.y - camera.y : this.y
-        
-        // Rita fienden som en röd rektangel
-        ctx.fillStyle = this.color
-        ctx.fillRect(screenX, screenY, this.width, this.height)
+
+        const spriteDrawn = this.drawSprite(ctx, camera, this.direction === -1)
+
+        if (!spriteDrawn) {
+            // Rita fienden som en röd rektangel
+            ctx.fillStyle = this.color
+            ctx.fillRect(screenX, screenY, this.width, this.height)
+        }
     }
 }
