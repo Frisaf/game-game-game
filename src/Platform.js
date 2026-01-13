@@ -1,17 +1,15 @@
 import GameObject from './GameObject.js'
+import Sprite from './Sprite.js'
 
 export default class Platform extends GameObject {
-    constructor(game, x, y, width, height, color = '#8B4513', sprite = null, spriteX = null, spriteY = null, spriteWidth = null, spriteHeight = null) {
+    constructor(game, x, y, width, height, options = {}) {
         super(game, x, y, width, height)
-        this.color = color
-        this.sprite = sprite
-        this.spriteX = spriteX
-        this.spriteY = spriteY
-        this.spriteWidth = spriteWidth
-        this.spriteHeight = spriteHeight
+        
+        this.color = options.color || '#8B4513'
 
-        this.img = new Image()
-        this.img.src = sprite
+        if (options.sprite) {
+            this.sprite = new Sprite(options.sprite)
+        }
     }
 
     update(deltaTime) {
@@ -22,13 +20,9 @@ export default class Platform extends GameObject {
         // Beräkna screen position (om camera finns)
         const screenX = camera ? this.x - camera.x : this.x
         const screenY = camera ? this.y - camera.y : this.y
-
-        const blocksX = this.width / 48
         
-        if (this.sprite) {
-            for (let i = 0; i <= this.width; i+=48) {
-                ctx.drawImage(this.img, this.spriteX, this.spriteY, this.spriteWidth, this.spriteHeight, screenX, screenY, this.width, this.height)
-            }
+        if (this.sprite && this.sprite.draw(ctx, screenX, screenY, this.width, this.height)) {
+            return
         }
 
         else {
