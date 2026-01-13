@@ -22,9 +22,13 @@ export default class Platform extends GameObject {
         // Beräkna screen position (om camera finns)
         const screenX = camera ? this.x - camera.x : this.x
         const screenY = camera ? this.y - camera.y : this.y
+
+        const blocksX = this.width / 48
         
         if (this.sprite) {
-            ctx.drawImage(this.img, this.spriteX, this.spriteY, this.spriteWidth, this.spriteHeight, screenX, screenY, this.width, this.height)
+            for (let i = 0; i <= this.width; i+=48) {
+                ctx.drawImage(this.img, this.spriteX, this.spriteY, this.spriteWidth, this.spriteHeight, screenX, screenY, this.width, this.height)
+            }
         }
 
         else {
