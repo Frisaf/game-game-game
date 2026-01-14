@@ -9,7 +9,6 @@ import bigClouds from '../assets/clouds/Big Clouds.png'
 import cloud1 from '../assets/clouds/Small Cloud 1.png'
 import cloud2 from '../assets/clouds/Small Cloud 2.png'
 import cloud3 from '../assets/clouds/Small Cloud 3.png'
-import terrain from "../assets/Pixel Adventure 1/Terrain/Terrain (16x16).png"
 
 /**
  * Level 1 - Den första nivån i spelet
@@ -81,41 +80,24 @@ export default class Level1 extends Level {
         const height = this.game.height
         const worldWidth = this.game.worldWidth
 
-        const groundConfig = {
-            image: terrain,
-            sourceWidth: 48,
-            sourceHeight: 48,
-            tile: "both",
-            sourceX: 96,
-        }
-
-        const platformConfig = {
-            image: terrain,
-            sourceWidth: 32,
-            sourceHeight: 32,
-            tile: "both",
-            sourceX: 208,
-            sourceY: 16
-        }
-
         this.platforms = [
             // Marken (hela nivån)
-            new Platform(this.game, 0, height - 40, worldWidth, 40, {ground: true}),
+            new Platform(this.game, 0, height - 40, worldWidth, 40, {sprite: {ground: true}}),
             
             // Plattformar (utspridda över nivån)
-            new Platform(this.game, 150, height - 140, 150, 20, {sprite: platformConfig}),
-            new Platform(this.game, 400, height - 200, 120, 20, {sprite: platformConfig}),
-            new Platform(this.game, 100, height - 280, 100, 20, {sprite: platformConfig}),
-            new Platform(this.game, 550, height - 160, 100, 20, {sprite: platformConfig}),
-            new Platform(this.game, 350, height - 320, 140, 20, {sprite: platformConfig}),
+            new Platform(this.game, 150, height - 140, 128, 32, {sprite: {platform: true}}),
+            new Platform(this.game, 400, height - 200, 128, 32, {sprite: {platform: true}}),
+            new Platform(this.game, 100, height - 280, 96, 32, {sprite: {platform: true}}),
+            new Platform(this.game, 550, height - 160, 96, 32, {sprite: {platform: true}}),
+            new Platform(this.game, 350, height - 320, 160, 32, {sprite: {platform: true}}),
             // Nya plattformar längre bort
-            new Platform(this.game, 900, height - 180, 140, 20, {sprite: platformConfig}),
-            new Platform(this.game, 1100, height - 240, 120, 20, {sprite: platformConfig}),
-            new Platform(this.game, 1300, height - 160, 100, 20, {sprite: platformConfig}),
-            new Platform(this.game, 1500, height - 280, 150, 20, {sprite: platformConfig}),
-            new Platform(this.game, 1750, height - 200, 120, 20, {sprite: platformConfig}),
-            new Platform(this.game, 1950, height - 320, 140, 20, {sprite: platformConfig}),
-            new Platform(this.game, 2150, height - 180, 100, 20, {sprite: platformConfig}),
+            new Platform(this.game, 900, height - 180, 160, 32, {sprite: {platform: true}}),
+            new Platform(this.game, 1100, height - 240, 128, 32, {sprite: {platform: true}}),
+            new Platform(this.game, 1300, height - 160, 96, 32, {sprite: {platform: true}}),
+            new Platform(this.game, 1500, height - 280, 160, 32, {sprite: {platform: true}}),
+            new Platform(this.game, 1750, height - 200, 128, 32, {sprite: {platform: true}}),
+            new Platform(this.game, 1950, height - 320, 160, 32, {sprite: {platform: true}}),
+            new Platform(this.game, 2150, height - 180, 96, 32, {sprite: {platform: true}}),
         ]
     }
 

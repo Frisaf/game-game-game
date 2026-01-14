@@ -41,7 +41,7 @@ export default class Sprite {
 
         this.image = new Image()
         
-        if (!config) {
+        if (config.platform) {
             this.image.src = platformConfig.image
             this.sourceWidth = platformConfig.sourceWidth
             this.sourceHeight = platformConfig.sourceHeight
@@ -68,8 +68,6 @@ export default class Sprite {
             // Tiling mode
             this.tile = config.tile || 'none' // 'none', 'horizontal', 'vertical', 'both'
         }
-
-        console.log(config.ground)
 
         this.loaded = false
         

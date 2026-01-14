@@ -21,6 +21,7 @@ export default class Player extends GameObject {
         // Fysik egenskaper
         this.jumpPower = -0.6 // negativ hastighet för att hoppa uppåt
         this.isGrounded = false // om spelaren står på marken
+        this.jumps = 0
         
         // Health system
         this.maxHealth = 3
@@ -60,9 +61,14 @@ export default class Player extends GameObject {
         }
 
         // Hopp - endast om spelaren är på marken
-        if (this.game.inputHandler.keys.has(' ') && this.isGrounded) {
+        if (this.game.inputHandler.keys.has(' ') && this.jumps <= 2 &&  this.isGrounded) {
             this.velocityY = this.jumpPower
+            this.jumps += 1
             this.isGrounded = false
+        }
+
+        if (this.isGrounded && this.jumps >= 2) {
+            this.jumps = 0
         }
 
         // Applicera gravitation

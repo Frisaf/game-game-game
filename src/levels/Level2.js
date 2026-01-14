@@ -8,7 +8,6 @@ import pinkBg from '../assets/Pixel Adventure 1/Background/Pink.png'
 import bigClouds from '../assets/clouds/Big Clouds.png'
 import cloud1 from '../assets/clouds/Small Cloud 1.png'
 import cloud2 from '../assets/clouds/Small Cloud 2.png'
-import terrain from "../assets/Pixel Adventure 1/Terrain/Terrain (16x16).png"
 
 /**
  * Level 2 - Andra nivån med svårare utmaningar
@@ -85,37 +84,20 @@ export default class Level2 extends Level {
         const height = this.game.height
         const worldWidth = this.game.worldWidth
 
-        const groundConfig = {
-            image: terrain,
-            sourceWidth: 48,
-            sourceHeight: 48,
-            tile: "both",
-            sourceX: 96,
-        }
-
-        const platformConfig = {
-            image: terrain,
-            sourceWidth: 32,
-            sourceHeight: 32,
-            tile: "both",
-            sourceX: 208,
-            sourceY: 16
-        }
-
         this.platforms = [
             // Marken (hela nivån)
-            new Platform(this.game, 0, height - 40, worldWidth, 40, {sprite: groundConfig}),
+            new Platform(this.game, 0, height - 40, worldWidth, 40, {sprite: {ground: true}}),
             
             // Svårare plattformar - högre hopp, längre gap
-            new Platform(this.game, 200, height - 180, 100, 20, '#8B4513'),
-            new Platform(this.game, 450, height - 280, 80, 20, '#8B4513'),
-            new Platform(this.game, 700, height - 200, 120, 20, '#8B4513'),
-            new Platform(this.game, 950, height - 320, 100, 20, '#8B4513'),
-            new Platform(this.game, 1200, height - 240, 90, 20, '#8B4513'),
-            new Platform(this.game, 1450, height - 360, 110, 20, '#8B4513'),
-            new Platform(this.game, 1700, height - 280, 100, 20, '#8B4513'),
-            new Platform(this.game, 1950, height - 200, 120, 20, '#8B4513'),
-            new Platform(this.game, 2200, height - 320, 100, 20, '#8B4513'),
+            new Platform(this.game, 200, height - 180, 96, 32, {sprite: {platform: true}}),
+            new Platform(this.game, 450, height - 280, 96, 32, {sprite: {platform: true}}),
+            new Platform(this.game, 700, height - 200, 128, 32, {sprite: {platform: true}}),
+            new Platform(this.game, 950, height - 320, 128, 32, {sprite: {platform: true}}),
+            new Platform(this.game, 1200, height - 240, 96, 32, {sprite: {platform: true}}),
+            new Platform(this.game, 1450, height - 360, 128, 32, {sprite: {platform: true}}),
+            new Platform(this.game, 1700, height - 280, 96, 32, {sprite: {platform: true}}),
+            new Platform(this.game, 1950, height - 200, 128, 32, {sprite: {platform: true}}),
+            new Platform(this.game, 2200, height - 320, 96, 32, {sprite: {platform: true}}),
         ]
     }
 
