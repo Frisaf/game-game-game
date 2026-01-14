@@ -61,13 +61,14 @@ export default class Player extends GameObject {
         }
 
         // Hopp - endast om spelaren är på marken
-        if (this.game.inputHandler.keys.has(' ') && this.jumps <= 2 &&  this.isGrounded) {
+        if (this.game.inputHandler.keys.has(' ') && this.jumps < 2) {
             this.velocityY = this.jumpPower
             this.jumps += 1
             this.isGrounded = false
+            this.game.inputHandler.keys.delete(" ")
         }
 
-        if (this.isGrounded && this.jumps >= 2) {
+        if (this.isGrounded) {
             this.jumps = 0
         }
 

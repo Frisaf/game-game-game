@@ -2,6 +2,7 @@ import Level from './Level.js'
 import Platform from '../Platform.js'
 import Coin from '../Coin.js'
 import Enemy from '../Enemy.js'
+import FlyingEnemy from '../FlyingEnemy.js'
 import Background from '../Background.js'
 import BackgroundObject from '../BackgroundObject.js'
 import blueBg from '../assets/Pixel Adventure 1/Background/Blue.png'
@@ -135,6 +136,8 @@ export default class Level1 extends Level {
             new Enemy(this.game, 1000, height - 220, 40, 40, 100),
             new Enemy(this.game, 1400, height - 200, 40, 40),
             new Enemy(this.game, 1800, height - 240, 40, 40, 150),
+
+            new FlyingEnemy(this.game, 100, height - 400, 40, 40)
         ]
     }
 }
