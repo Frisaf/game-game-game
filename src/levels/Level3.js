@@ -9,6 +9,7 @@ import bigClouds from '../assets/clouds/Big Clouds.png'
 import cloud1 from '../assets/clouds/Small Cloud 1.png'
 import cloud2 from '../assets/clouds/Small Cloud 2.png'
 import FlyingEnemy from '../FlyingEnemy.js'
+import Boss from '../Boss.js'
 
 export default class Level3 extends Level {
     constructor(game) {
@@ -101,7 +102,7 @@ export default class Level3 extends Level {
         const height = this.game.height
 
         this.enemies = [
-            new FlyingEnemy(this.game, 300, height - 220, 100, 100)
+            new Boss(this.game, 300, height - 220, 100, 100)
         ]
     }
 }
