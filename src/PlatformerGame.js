@@ -5,6 +5,7 @@ import Level1 from './levels/Level1.js'
 import Level2 from './levels/Level2.js'
 import MainMenu from './menus/MainMenu.js'
 import SaveGameManager from './SaveGameManager.js'
+import Level3 from './levels/Level3.js'
 
 /**
  * PlatformerGame - En konkret implementation av GameBase för plattformsspel
@@ -30,7 +31,7 @@ export default class PlatformerGame extends GameBase {
         
         // Level management
         this.currentLevelIndex = 0
-        this.levels = [Level1, Level2] // Array av level-klasser
+        this.levels = [Level1, Level2, Level3] // Array av level-klasser
         this.currentLevel = null
         
         // Plattformsspel-specifika arrays
